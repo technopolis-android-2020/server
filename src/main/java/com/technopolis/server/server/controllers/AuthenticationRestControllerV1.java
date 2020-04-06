@@ -70,17 +70,24 @@ public class AuthenticationRestControllerV1 {
             throw new BadCredentialsException("User with email: " + email +" already exists");
         }
 
+        String refreshToken = jwtTokenProvider.createRefreshToken(username);
+
         User user = new User();
         user.setUsername(requestDto.getUsername());
         user.setEmail(requestDto.getEmail());
         user.setFirstName(requestDto.getFirstName());
         user.setLastName(requestDto.getLastName());
         user.setPassword(requestDto.getPassword());
+        user.setRefreshToken(refreshToken);
 
         userService.register(user);
 
+        String token = jwtTokenProvider.createToken(username, user.getRoles());
+
         Map<Object, Object> response = new HashMap<>();
         response.put("username", username);
+        response.put("token", token);
+        response.put("refreshToken", refreshToken);
         return ResponseEntity.ok(response);
     }
 }
