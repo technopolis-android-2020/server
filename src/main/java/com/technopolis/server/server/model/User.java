@@ -9,7 +9,7 @@ import java.util.List;
 @Table(name = "users")
 @Data
 public class User extends BaseEntity {
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
 
     @Column(name = "first_name")
