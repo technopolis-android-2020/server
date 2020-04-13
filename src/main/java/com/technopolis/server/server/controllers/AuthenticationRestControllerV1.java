@@ -88,11 +88,8 @@ public class AuthenticationRestControllerV1 {
 
         userService.register(user);
 
-        //String token = jwtTokenProvider.createToken(username, user.getRoles());
-
         Map<Object, Object> response = new HashMap<>();
         response.put("username", username);
-        //response.put("token", token);
         response.put("refreshToken", refreshToken);
         return ResponseEntity.ok(response);
     }
