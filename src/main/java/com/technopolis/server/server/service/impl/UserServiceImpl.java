@@ -38,12 +38,18 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(userRoles);
         user.setStatus(Status.ACTIVE);
+        user.setRefreshToken(user.getRefreshToken());
 
         User registeredUser = userRepository.save(user);
 
         log.info("IN register - user: {} successfully registered", registeredUser);
 
         return registeredUser;
+    }
+
+    @Override
+    public User updateUser(User user){
+        return userRepository.save(user);
     }
 
     @Override
