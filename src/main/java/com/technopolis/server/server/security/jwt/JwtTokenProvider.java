@@ -28,6 +28,9 @@ public class JwtTokenProvider {
     @Value("${jwt.token.expired}")
     private long validityInMilliseconds;
 
+    @Value("${jwt.refreshToken.expired}")
+    private long rtValidityInMilliseconds;
+
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -56,6 +59,21 @@ public class JwtTokenProvider {
                 .setIssuedAt(now)//
                 .setExpiration(validity)//
                 .signWith(SignatureAlgorithm.HS256, secret)//
+                .compact();
+    }
+
+    public String createRefreshToken(String username) {
+
+        Claims claims = Jwts.claims().setSubject(username);
+
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + rtValidityInMilliseconds);
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(validity)
+                .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
 

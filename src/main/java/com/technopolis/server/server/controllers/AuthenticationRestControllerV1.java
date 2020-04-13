@@ -1,6 +1,7 @@
 package com.technopolis.server.server.controllers;
 
 import com.technopolis.server.server.dto.AuthenticationRequestDto;
+import com.technopolis.server.server.dto.RefreshRequestDto;
 import com.technopolis.server.server.dto.RegisterRequestDto;
 import com.technopolis.server.server.model.User;
 import com.technopolis.server.server.security.jwt.JwtTokenProvider;
@@ -48,11 +49,16 @@ public class AuthenticationRestControllerV1 {
                 throw new UsernameNotFoundException("User with username: " + username + " not found");
             }
 
-            String token = jwtTokenProvider.createToken(username, user.getRoles());
+            String accessToken = jwtTokenProvider.createToken(username, user.getRoles());
+            String refreshToken = jwtTokenProvider.createRefreshToken(username);
+
+            user.setRefreshToken(refreshToken);
+            userService.updateUser(user);
 
             Map<Object, Object> response = new HashMap<>();
             response.put("username", username);
-            response.put("token", token);
+            response.put("accessToken", accessToken);
+            response.put("refreshToken", refreshToken);
 
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
@@ -70,17 +76,46 @@ public class AuthenticationRestControllerV1 {
             throw new BadCredentialsException("User with email: " + email +" already exists");
         }
 
+        String refreshToken = jwtTokenProvider.createRefreshToken(username);
+
         User user = new User();
         user.setUsername(requestDto.getUsername());
         user.setEmail(requestDto.getEmail());
         user.setFirstName(requestDto.getFirstName());
         user.setLastName(requestDto.getLastName());
         user.setPassword(requestDto.getPassword());
+        user.setRefreshToken(refreshToken);
 
         userService.register(user);
 
+        //String token = jwtTokenProvider.createToken(username, user.getRoles());
+
         Map<Object, Object> response = new HashMap<>();
         response.put("username", username);
+        //response.put("token", token);
+        response.put("refreshToken", refreshToken);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("refresh")
+    public ResponseEntity refresh(@RequestBody RefreshRequestDto requestDto){
+        String reqUsername = requestDto.getUsername();
+        String reqRefreshToken = requestDto.getRefreshToken();
+
+        User user = userService.findByUsername(reqUsername);
+        if (user == null){
+            throw new UsernameNotFoundException("User with username: " + reqUsername + " not found");
+        }
+        String userRefreshToken = user.getRefreshToken();
+        if (!reqRefreshToken.equals(userRefreshToken)){
+            throw new UsernameNotFoundException("User refresh token not valid");
+        }
+
+        String newAccessToken = jwtTokenProvider.createToken(reqUsername, user.getRoles());
+
+        Map<Object, Object> response = new HashMap<>();
+        response.put("username", reqUsername);
+        response.put("accessToken", newAccessToken);
         return ResponseEntity.ok(response);
     }
 }
