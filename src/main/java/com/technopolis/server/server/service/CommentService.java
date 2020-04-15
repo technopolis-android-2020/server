@@ -2,7 +2,6 @@ package com.technopolis.server.server.service;
 
 import com.technopolis.server.server.dto.AddCommentDto;
 import com.technopolis.server.server.model.Comment;
-import com.technopolis.server.server.model.User;
 
 import java.util.List;
 

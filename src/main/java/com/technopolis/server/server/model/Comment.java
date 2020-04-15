@@ -2,7 +2,6 @@ package com.technopolis.server.server.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 
 import javax.persistence.*;
 
@@ -10,7 +9,7 @@ import javax.persistence.*;
 @Data
 @Entity(name = "comment")
 @Table
-public class Comment extends BaseEntity{
+public class Comment extends BaseEntity {
     @Column(name = "username", nullable = false, updatable = false)
     private String username;
 

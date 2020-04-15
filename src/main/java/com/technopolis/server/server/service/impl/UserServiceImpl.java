@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user){
+    public User updateUser(User user) {
         return userRepository.save(user);
     }
 
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email){
+    public User findByEmail(String email) {
         User result = userRepository.findByEmail(email);
         log.info("IN findByEmail<User> - user: {} found by email: {}", result, email);
         return result;

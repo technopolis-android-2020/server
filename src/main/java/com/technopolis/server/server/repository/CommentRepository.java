@@ -1,4 +1,5 @@
 package com.technopolis.server.server.repository;
+
 import com.technopolis.server.server.model.Comment;
 import com.technopolis.server.server.model.News;
 import org.springframework.data.domain.Sort;

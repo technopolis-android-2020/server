@@ -39,13 +39,13 @@ public class CommentServiceImpl implements CommentService {
         String username = addComment.getUsername();
 
         News news = newsRepository.findById(newsId).orElse(null);
-        if (news == null){
+        if (news == null) {
             log.warn("IN add<Comment> - no news found by id: {}", newsId);
             return null;
         }
 
         User user = userRepository.findByUsername(username);
-        if (user == null){
+        if (user == null) {
             log.warn("IN add<Comment> - no user found by username: {}", username);
             return null;
         }
@@ -78,13 +78,13 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> findAllByNewsId(Long id) {
         News news = newsRepository.findById(id).orElse(null);
-        if (news == null){
+        if (news == null) {
             log.warn("IN findAllByNewsId<Comment> - no news found by id: {}", id);
             return null;
         }
 
         List<Comment> result = commentRepository.findByNews(news, Sort.by("created"));
-        if (result == null){
+        if (result == null) {
             log.info("IN findAllByNewsId<Comment> - : no comment found by news: {}", id);
             return null;
         }
