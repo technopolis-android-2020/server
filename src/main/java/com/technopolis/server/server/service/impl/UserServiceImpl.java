@@ -55,21 +55,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAll() {
         List<User> result = userRepository.findAll();
-        log.info("IN getAll - {} users found", result.size());
+        log.info("IN getAll<User> - {} users found", result.size());
         return result;
     }
 
     @Override
     public User findByUsername(String username) {
         User result = userRepository.findByUsername(username);
-        log.info("IN findByUsername - user: {} found by username: {}", result, username);
+        log.info("IN findByUsername<User> - user: found by username: {}", username);
         return result;
     }
 
     @Override
     public User findByEmail(String email){
         User result = userRepository.findByEmail(email);
-        log.info("IN findByEmail - user: {} found by email: {}", result, email);
+        log.info("IN findByEmail<User> - user: {} found by email: {}", result, email);
         return result;
     }
 
@@ -79,17 +79,17 @@ public class UserServiceImpl implements UserService {
         User result = userRepository.findById(id).orElse(null);
 
         if (result == null) {
-            log.warn("IN findById - no user found by id: {}", id);
+            log.warn("IN findById<User> - no user found by id: {}", id);
             return null;
         }
 
-        log.info("IN findById - user: {} found by id: {}", result);
+        log.info("IN findById<User> - user: {} found by id: {}", result, id);
         return result;
     }
 
     @Override
     public void delete(Long id) {
         userRepository.deleteById(id);
-        log.info("IN delete - user with id: {} successfully deleted");
+        log.info("IN delete<User> - user with id: {} successfully deleted", id);
     }
 }
