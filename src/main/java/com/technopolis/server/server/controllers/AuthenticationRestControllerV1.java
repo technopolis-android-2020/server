@@ -39,7 +39,7 @@ public class AuthenticationRestControllerV1 {
     }
 
     @PostMapping("login")
-    public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
+    public ResponseEntity<Map<Object, Object>> login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
             String username = requestDto.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
@@ -67,7 +67,7 @@ public class AuthenticationRestControllerV1 {
     }
 
     @PostMapping("register")
-    public ResponseEntity register(@RequestBody RegisterRequestDto requestDto) {
+    public ResponseEntity<Map<Object, Object>> register(@RequestBody RegisterRequestDto requestDto) {
         String username = requestDto.getUsername();
         String email = requestDto.getEmail();
         if (userService.findByUsername(username) != null) {
@@ -95,7 +95,7 @@ public class AuthenticationRestControllerV1 {
     }
 
     @PostMapping("refresh")
-    public ResponseEntity refresh(@RequestBody RefreshRequestDto requestDto) {
+    public ResponseEntity<Map<Object, Object>> refresh(@RequestBody RefreshRequestDto requestDto) {
         String reqUsername = requestDto.getUsername();
         String reqRefreshToken = requestDto.getRefreshToken();
 
