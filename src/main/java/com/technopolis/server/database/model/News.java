@@ -3,7 +3,7 @@ package com.technopolis.server.database.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,12 +15,12 @@ public class News {
     private Long id;
 
     @Column(name="date", nullable = false)
-    private Timestamp publicationDate;
+    private Date publicationDate;
 
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "body", nullable = false)
+    @Column(name = "body", columnDefinition = "TEXT", nullable = false)
     private String body;
 
     @Column(name = "url", nullable = false)

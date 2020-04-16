@@ -1,10 +1,11 @@
 package com.technopolis.server.database.service;
 
-import com.technopolis.server.database.model.News;
 import com.technopolis.server.database.repository.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.technopolis.server.database.model.News;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,5 +24,10 @@ public class NewsService {
 
     public void addNews(List<News> news) {
         this.newsRepository.saveAll(news);
+    }
+
+    public Date getLatestDateByAgentName(String agentName) {
+        News news = this.newsRepository.findTopByAgent_NameOrderByPublicationDateDesc(agentName);
+        return news == null ? null : news.getPublicationDate();
     }
 }
