@@ -10,8 +10,10 @@ import javax.persistence.*;
 @Entity(name = "comment")
 @Table
 public class Comment extends BaseEntity {
-    @Column(name = "username", nullable = false, updatable = false)
-    private String username;
+
+    @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "content", nullable = false)
     private String content;
@@ -22,5 +24,5 @@ public class Comment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User person;
+    private User user;
 }

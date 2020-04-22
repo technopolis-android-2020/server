@@ -54,7 +54,7 @@ public class CommentRestControllerV1 {
     }
 
     private void fillCommentResponse(Comment com, Map<Object, Object> comment) {
-        comment.put("username", com.getUsername());
+        comment.put("username", com.getUser().getUsername());
         comment.put("newId", com.getNews().getId());
         comment.put("content", com.getContent());
         comment.put("time", com.getCreated());

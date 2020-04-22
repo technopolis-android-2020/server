@@ -11,17 +11,22 @@ import java.util.List;
 @Entity
 @Table(name = "news")
 public class News extends BaseEntity {
-    @Column(name = "agent", nullable = false)
-    private String agent;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "body")
+    @Column(name = "body", columnDefinition = "TEXT", nullable = false)
     private String body;
 
     @Column(name = "url", nullable = false)
     private String url;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "agent_id")
+    private Agent agent;
 
     @OneToMany(mappedBy = "news", fetch = FetchType.LAZY)
     private List<Comment> comment;

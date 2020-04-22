@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
+
 @Service
 @Slf4j
 public class NewsServiceImpl implements NewsService {
@@ -29,5 +32,18 @@ public class NewsServiceImpl implements NewsService {
 
         log.info("IN findById<News> - news: {} found by id: {}", result, id);
         return result;
+    }
+
+    public void addNews(News news) {
+        this.newsRepository.saveAndFlush(news);
+    }
+
+    public void addNews(List<News> news) {
+        this.newsRepository.saveAll(news);
+    }
+
+    public Date getLatestDateByAgentName(String agentName) {
+        News news = this.newsRepository.findTopByAgent_NameOrderByCreatedDesc(agentName);
+        return news == null ? null : news.getCreated();
     }
 }
