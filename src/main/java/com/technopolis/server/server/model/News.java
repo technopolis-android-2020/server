@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -23,6 +24,9 @@ public class News extends BaseEntity {
 
     @Column(name = "url", nullable = false)
     private String url;
+
+    @Column(name="date", nullable = false)
+    private Date publicationDate;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "agent_id")

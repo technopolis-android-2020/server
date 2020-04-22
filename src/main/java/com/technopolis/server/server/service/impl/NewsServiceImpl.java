@@ -43,7 +43,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     public Date getLatestDateByAgentName(String agentName) {
-        News news = this.newsRepository.findTopByAgent_NameOrderByCreatedDesc(agentName);
-        return news == null ? null : news.getCreated();
+        News news = this.newsRepository.findTopByAgent_NameOrderByPublicationDateDesc(agentName);
+        return news == null ? null : news.getPublicationDate();
     }
 }
