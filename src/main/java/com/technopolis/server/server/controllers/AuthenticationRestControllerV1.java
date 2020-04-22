@@ -39,7 +39,7 @@ public class AuthenticationRestControllerV1 {
     }
 
     @PostMapping("login")
-    public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
+    public ResponseEntity<Map<Object, Object>> login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
             String username = requestDto.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
@@ -67,13 +67,13 @@ public class AuthenticationRestControllerV1 {
     }
 
     @PostMapping("register")
-    public ResponseEntity register(@RequestBody RegisterRequestDto requestDto){
+    public ResponseEntity<Map<Object, Object>> register(@RequestBody RegisterRequestDto requestDto) {
         String username = requestDto.getUsername();
         String email = requestDto.getEmail();
-        if (userService.findByUsername(username) != null ) {
-            throw new BadCredentialsException("User with username: " + username +" already exists");
+        if (userService.findByUsername(username) != null) {
+            throw new BadCredentialsException("User with username: " + username + " already exists");
         } else if (userService.findByEmail(email) != null) {
-            throw new BadCredentialsException("User with email: " + email +" already exists");
+            throw new BadCredentialsException("User with email: " + email + " already exists");
         }
 
         String refreshToken = jwtTokenProvider.createRefreshToken(username);
@@ -95,16 +95,16 @@ public class AuthenticationRestControllerV1 {
     }
 
     @PostMapping("refresh")
-    public ResponseEntity refresh(@RequestBody RefreshRequestDto requestDto){
+    public ResponseEntity<Map<Object, Object>> refresh(@RequestBody RefreshRequestDto requestDto) {
         String reqUsername = requestDto.getUsername();
         String reqRefreshToken = requestDto.getRefreshToken();
 
         User user = userService.findByUsername(reqUsername);
-        if (user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("User with username: " + reqUsername + " not found");
         }
         String userRefreshToken = user.getRefreshToken();
-        if (!reqRefreshToken.equals(userRefreshToken)){
+        if (!reqRefreshToken.equals(userRefreshToken)) {
             throw new UsernameNotFoundException("User refresh token not valid");
         }
 

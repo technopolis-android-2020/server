@@ -2,8 +2,6 @@ package com.technopolis.server.server.dto;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-
 @Data
 public class RegisterRequestDto {
     private String username;

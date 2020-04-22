@@ -1,10 +1,12 @@
 package com.technopolis.server.server.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "users")
 @Data
@@ -26,6 +28,10 @@ public class User extends BaseEntity {
 
     @Column(name = "refresh_token")
     private String refreshToken;
+
+
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    private List<Comment> comment;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
