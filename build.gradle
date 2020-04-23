@@ -20,6 +20,12 @@ repositories {
 }
 
 dependencies {
+	//rss saver
+	implementation 'com.rometools:rome:1.12.0'
+
+	// jsoup HTML parser library @ https://jsoup.org/
+	compile 'org.jsoup:jsoup:1.13.1'
+
 	implementation 'org.postgresql:postgresql'
 
 	compileOnly 'org.projectlombok:lombok:1.18.12'
