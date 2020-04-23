@@ -1,8 +1,8 @@
-package com.technopolis.server.server.service.impl;
+package com.technopolis.server.database.service.impl;
 
-import com.technopolis.server.server.model.News;
-import com.technopolis.server.server.repository.NewsRepository;
-import com.technopolis.server.server.service.NewsService;
+import com.technopolis.server.database.model.News;
+import com.technopolis.server.database.repository.NewsRepository;
+import com.technopolis.server.database.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

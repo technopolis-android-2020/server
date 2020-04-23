@@ -1,4 +1,4 @@
-package com.technopolis.server.server.model;
+package com.technopolis.server.database.model;
 
 public enum Status {
     ACTIVE, NOT_ACTIVE, DELETED

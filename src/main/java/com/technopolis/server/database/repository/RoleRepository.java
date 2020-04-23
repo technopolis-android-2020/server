@@ -1,6 +1,6 @@
-package com.technopolis.server.server.repository;
+package com.technopolis.server.database.repository;
 
-import com.technopolis.server.server.model.Role;
+import com.technopolis.server.database.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {

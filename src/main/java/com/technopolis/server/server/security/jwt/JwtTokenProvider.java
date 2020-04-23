@@ -1,6 +1,6 @@
 package com.technopolis.server.server.security.jwt;
 
-import com.technopolis.server.server.model.Role;
+import com.technopolis.server.database.model.Role;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

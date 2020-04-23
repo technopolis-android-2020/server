@@ -1,4 +1,4 @@
-package com.technopolis.server.server.model;
+package com.technopolis.server.database.model;
 
 import lombok.Data;
 

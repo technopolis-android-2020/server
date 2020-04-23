@@ -1,7 +1,7 @@
-package com.technopolis.server.server.fetcher;
+package com.technopolis.server.fetcher;
 
-import com.technopolis.server.server.service.impl.AgentServiceImpl;
-import com.technopolis.server.server.service.impl.NewsServiceImpl;
+import com.technopolis.server.database.service.impl.AgentServiceImpl;
+import com.technopolis.server.database.service.impl.NewsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -1,9 +1,9 @@
 package com.technopolis.server.server.security;
 
-import com.technopolis.server.server.model.User;
+import com.technopolis.server.database.model.User;
 import com.technopolis.server.server.security.jwt.JwtUser;
 import com.technopolis.server.server.security.jwt.JwtUserFactory;
-import com.technopolis.server.server.service.UserService;
+import com.technopolis.server.database.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

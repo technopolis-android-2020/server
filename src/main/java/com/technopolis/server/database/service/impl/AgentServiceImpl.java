@@ -1,8 +1,8 @@
-package com.technopolis.server.server.service.impl;
+package com.technopolis.server.database.service.impl;
 
-import com.technopolis.server.server.repository.AgentRepository;
+import com.technopolis.server.database.repository.AgentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.technopolis.server.server.model.Agent;
+import com.technopolis.server.database.model.Agent;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

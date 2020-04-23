@@ -1,8 +1,8 @@
 package com.technopolis.server.server.controllers;
 
 import com.technopolis.server.server.dto.UserDto;
-import com.technopolis.server.server.model.User;
-import com.technopolis.server.server.service.UserService;
+import com.technopolis.server.database.model.User;
+import com.technopolis.server.database.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

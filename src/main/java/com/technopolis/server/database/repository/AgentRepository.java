@@ -1,7 +1,7 @@
-package com.technopolis.server.server.repository;
+package com.technopolis.server.database.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.technopolis.server.server.model.Agent;
+import com.technopolis.server.database.model.Agent;
 
 public interface AgentRepository extends JpaRepository<Agent, Long> {
 

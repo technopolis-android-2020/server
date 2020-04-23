@@ -1,4 +1,4 @@
-package com.technopolis.server.server.fetcher;
+package com.technopolis.server.fetcher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

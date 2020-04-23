@@ -1,7 +1,7 @@
-package com.technopolis.server.server.repository;
+package com.technopolis.server.database.repository;
 
-import com.technopolis.server.server.model.Comment;
-import com.technopolis.server.server.model.News;
+import com.technopolis.server.database.model.Comment;
+import com.technopolis.server.database.model.News;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 

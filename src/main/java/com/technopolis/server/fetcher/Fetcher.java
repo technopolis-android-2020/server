@@ -1,4 +1,4 @@
-package com.technopolis.server.server.fetcher;
+package com.technopolis.server.fetcher;
 
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
@@ -9,10 +9,10 @@ import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.feed.synd.SyndEntry;
-import com.technopolis.server.server.model.News;
-import com.technopolis.server.server.model.Agent;
-import com.technopolis.server.server.service.impl.NewsServiceImpl;
-import com.technopolis.server.server.service.impl.AgentServiceImpl;
+import com.technopolis.server.database.model.News;
+import com.technopolis.server.database.model.Agent;
+import com.technopolis.server.database.service.impl.NewsServiceImpl;
+import com.technopolis.server.database.service.impl.AgentServiceImpl;
 
 import java.net.URL;
 import java.util.Date;

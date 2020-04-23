@@ -1,8 +1,8 @@
 package com.technopolis.server.server.security.jwt;
 
-import com.technopolis.server.server.model.Role;
-import com.technopolis.server.server.model.Status;
-import com.technopolis.server.server.model.User;
+import com.technopolis.server.database.model.Role;
+import com.technopolis.server.database.model.Status;
+import com.technopolis.server.database.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
