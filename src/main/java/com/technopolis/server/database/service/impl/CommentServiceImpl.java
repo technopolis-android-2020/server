@@ -1,6 +1,5 @@
 package com.technopolis.server.database.service.impl;
 
-import com.technopolis.server.server.dto.AddCommentDto;
 import com.technopolis.server.database.model.Comment;
 import com.technopolis.server.database.model.News;
 import com.technopolis.server.database.model.Status;
@@ -9,6 +8,7 @@ import com.technopolis.server.database.repository.CommentRepository;
 import com.technopolis.server.database.repository.NewsRepository;
 import com.technopolis.server.database.repository.UserRepository;
 import com.technopolis.server.database.service.CommentService;
+import com.technopolis.server.server.dto.AddCommentDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -89,7 +89,7 @@ public class CommentServiceImpl implements CommentService {
             return null;
         }
 
-        log.info("IN findAllByNewsId<Comment> - comments found by news: {}");
+        log.info("IN findAllByNewsId<Comment> - comments found by news: {}", result.size());
         return result;
     }
 

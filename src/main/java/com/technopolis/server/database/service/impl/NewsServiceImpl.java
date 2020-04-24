@@ -5,6 +5,7 @@ import com.technopolis.server.database.repository.NewsRepository;
 import com.technopolis.server.database.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -34,6 +35,13 @@ public class NewsServiceImpl implements NewsService {
         return result;
     }
 
+    @Override
+    public List<News> getAll() {
+        List<News> result = newsRepository.findAll(Sort.by("publicationDate"));
+        log.info("IN getAll<News> - {} News found", result.size());
+        return result;
+    }
+
     public void addNews(News news) {
         this.newsRepository.saveAndFlush(news);
     }
@@ -46,4 +54,5 @@ public class NewsServiceImpl implements NewsService {
         News news = this.newsRepository.findTopByAgent_NameOrderByPublicationDateDesc(agentName);
         return news == null ? null : news.getPublicationDate();
     }
+
 }
