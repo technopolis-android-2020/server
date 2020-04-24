@@ -52,9 +52,9 @@ public class CommentServiceImpl implements CommentService {
 
         comment.setNews(news);
         comment.setStatus(Status.ACTIVE);
-        comment.getUser().setUsername(addComment.getUsername());
         comment.setContent(addComment.getContent());
         comment.setUser(user);
+        comment.getUser().setUsername(addComment.getUsername());
 
         Comment addedComment = commentRepository.save(comment);
 
