@@ -2,6 +2,7 @@ package com.technopolis.server.fetcher;
 
 import com.technopolis.server.database.service.impl.AgentServiceImpl;
 import com.technopolis.server.database.service.impl.NewsServiceImpl;
+import com.rometools.rome.feed.synd.SyndEntry;
 import org.jsoup.select.Elements;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -33,6 +34,16 @@ public class RbcFetcher extends Fetcher {
         }
 
         return newDocument.outerHtml();
+    }
+
+    @Override
+    String getPreviewImageFromRssEntity(SyndEntry entity) {
+        return entity.getEnclosures().isEmpty() ? channelPreviewImgUrl : entity.getEnclosures().get(0).getUrl();
+    }
+
+    @Override
+    String getChannelPreviewImg() {
+        return fetchedRss.getImage() == null ? "" : fetchedRss.getImage().getUrl();
     }
 
     @Override
