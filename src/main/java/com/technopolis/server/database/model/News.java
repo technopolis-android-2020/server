@@ -12,9 +12,6 @@ import java.util.List;
 @Entity
 @Table(name = "news")
 public class News extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -25,7 +22,7 @@ public class News extends BaseEntity {
     @Column(name = "url", nullable = false)
     private String url;
 
-    @Column(name="date", nullable = false)
+    @Column(name = "date", nullable = false)
     private Date publicationDate;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
