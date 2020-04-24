@@ -1,8 +1,8 @@
 package com.technopolis.server.server.controllers;
 
 import com.technopolis.server.server.dto.AddCommentDto;
-import com.technopolis.server.server.model.Comment;
-import com.technopolis.server.server.service.CommentService;
+import com.technopolis.server.database.model.Comment;
+import com.technopolis.server.database.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -54,7 +54,7 @@ public class CommentRestControllerV1 {
     }
 
     private void fillCommentResponse(Comment com, Map<Object, Object> comment) {
-        comment.put("username", com.getUsername());
+        comment.put("username", com.getUser().getUsername());
         comment.put("newId", com.getNews().getId());
         comment.put("content", com.getContent());
         comment.put("time", com.getCreated());

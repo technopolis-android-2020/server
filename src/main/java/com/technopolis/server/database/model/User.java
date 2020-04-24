@@ -1,4 +1,4 @@
-package com.technopolis.server.server.model;
+package com.technopolis.server.database.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,7 +30,7 @@ public class User extends BaseEntity {
     private String refreshToken;
 
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Comment> comment;
 
     @ManyToMany(fetch = FetchType.EAGER)

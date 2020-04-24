@@ -1,7 +1,7 @@
 package com.technopolis.server.server.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.technopolis.server.server.model.User;
+import com.technopolis.server.database.model.User;
 import lombok.Data;
 
 //Класс для тестирования работоспособности токена

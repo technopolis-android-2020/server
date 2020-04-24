@@ -1,11 +1,14 @@
-package com.technopolis.server.server.service.impl;
+package com.technopolis.server.database.service.impl;
 
-import com.technopolis.server.server.model.News;
-import com.technopolis.server.server.repository.NewsRepository;
-import com.technopolis.server.server.service.NewsService;
+import com.technopolis.server.database.model.News;
+import com.technopolis.server.database.repository.NewsRepository;
+import com.technopolis.server.database.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -29,5 +32,18 @@ public class NewsServiceImpl implements NewsService {
 
         log.info("IN findById<News> - news: {} found by id: {}", result, id);
         return result;
+    }
+
+    public void addNews(News news) {
+        this.newsRepository.saveAndFlush(news);
+    }
+
+    public void addNews(List<News> news) {
+        this.newsRepository.saveAll(news);
+    }
+
+    public Date getLatestDateByAgentName(String agentName) {
+        News news = this.newsRepository.findTopByAgent_NameOrderByPublicationDateDesc(agentName);
+        return news == null ? null : news.getPublicationDate();
     }
 }

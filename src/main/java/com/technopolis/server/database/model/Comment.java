@@ -1,4 +1,4 @@
-package com.technopolis.server.server.model;
+package com.technopolis.server.database.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,8 +10,6 @@ import javax.persistence.*;
 @Entity(name = "comment")
 @Table
 public class Comment extends BaseEntity {
-    @Column(name = "username", nullable = false, updatable = false)
-    private String username;
 
     @Column(name = "content", nullable = false)
     private String content;
@@ -22,5 +20,5 @@ public class Comment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User person;
+    private User user;
 }

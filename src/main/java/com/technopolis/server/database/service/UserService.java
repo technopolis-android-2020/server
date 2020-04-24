@@ -1,6 +1,6 @@
-package com.technopolis.server.server.service;
+package com.technopolis.server.database.service;
 
-import com.technopolis.server.server.model.User;
+import com.technopolis.server.database.model.User;
 
 import java.util.List;
 
