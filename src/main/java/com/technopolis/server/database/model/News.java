@@ -16,6 +16,9 @@ public class News extends BaseEntity {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @Column(name = "preview_img_url")
+    private String previewImgUrl;
+
     @Column(name = "body", columnDefinition = "TEXT", nullable = false)
     private String body;
 

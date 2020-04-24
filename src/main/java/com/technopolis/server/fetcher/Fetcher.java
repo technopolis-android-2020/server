@@ -26,7 +26,9 @@ public abstract class Fetcher implements Callable<Integer> {
 
     private AgentServiceImpl agentService;
     private NewsServiceImpl newsService;
+    String channelPreviewImgUrl;
     private String rssUrl;
+    SyndFeed fetchedRss;
     String agentName;
     Logger logger;
 
@@ -39,7 +41,9 @@ public abstract class Fetcher implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        saveNews( makeNews( fetchRss( new URL(rssUrl))));
+        fetchRss( new URL(rssUrl));
+        channelPreviewImgUrl = getChannelPreviewImg();
+        saveNews( makeNews());
         return 0;
     }
 
@@ -76,13 +80,13 @@ public abstract class Fetcher implements Callable<Integer> {
     // +              News Methods                 +
     // +-------------------------------------------+
 
-    private List<News> makeNews(SyndFeed feed) {
+    private List<News> makeNews() {
         List<News> result = new ArrayList<>();
         Date latestDate = newsService.getLatestDateByAgentName(agentName);
 
         logger.info(this.getClass().getName() + ": making news from feed.");
 
-        for (SyndEntry entry: feed.getEntries()) {
+        for (SyndEntry entry: fetchedRss.getEntries()) {
             if (latestDate == null || getPublicationDateFromRssEntity(entry).compareTo(latestDate) > 0) {
                 result.add(makeNews(entry));
             }
@@ -99,6 +103,7 @@ public abstract class Fetcher implements Callable<Integer> {
 
         News news = new News();
         news.setPublicationDate(getPublicationDateFromRssEntity(entry));
+        news.setPreviewImgUrl(getPreviewImageFromRssEntity(entry));
         news.setTitle(getTitle(document));
         news.setBody(getNewsBody(document));
         news.setAgent(getAgent());
@@ -112,9 +117,9 @@ public abstract class Fetcher implements Callable<Integer> {
     // +               Rss Methods                 +
     // +-------------------------------------------+
 
-    private SyndFeed fetchRss(URL rssUrl) throws IOException, FeedException {
+    private void fetchRss(URL rssUrl) throws IOException, FeedException {
         logger.info(this.getClass().getName() + ": Fetching rss.");
-        return new SyndFeedInput().build(new XmlReader(rssUrl));
+        fetchedRss = new SyndFeedInput().build(new XmlReader(rssUrl));
     }
 
     private String getUrlFromRssEntity(SyndEntry entry) {
@@ -133,6 +138,10 @@ public abstract class Fetcher implements Callable<Integer> {
                 Calendar.getInstance().getTime() :
                 entry.getPublishedDate();
     }
+
+    abstract String getPreviewImageFromRssEntity(SyndEntry entity);
+
+    abstract String getChannelPreviewImg();
 
     // ---------------------------------------------
 
