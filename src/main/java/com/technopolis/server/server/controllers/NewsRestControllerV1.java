@@ -4,14 +4,15 @@ import com.technopolis.server.database.model.News;
 import com.technopolis.server.database.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/api/v1/news/")
@@ -28,8 +29,33 @@ public class NewsRestControllerV1 {
     public ResponseEntity<List<Object>> getAllNews() {
         List<News> news = newsService.getAll();
 
-        List<Object> response = new LinkedList<>();
+        List<Object> response = getResponse(news);
 
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("from/{dateInString}")
+    public ResponseEntity<List<Object>> getNewsFromDate(@PathVariable String dateInString){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+
+        Date date = null;
+        try {
+            date = formatter.parse(dateInString);
+            System.out.println(date);
+            System.out.println(formatter.format(date));
+        } catch (ParseException e) {
+            throw new UsernameNotFoundException("<dateInString> is not in format");
+        }
+
+        List<News> news = newsService.getByDate(date);
+
+        List<Object> response = getResponse(news);;
+
+        return ResponseEntity.ok(response);
+    }
+
+    private List<Object> getResponse(List<News> news) {
+        List<Object> response = new LinkedList<>();
         for (News element : news) {
             Map<Object, Object> oneNews = new HashMap<>();
             oneNews.put("id", element.getId());
@@ -43,8 +69,7 @@ public class NewsRestControllerV1 {
 
             response.add(oneNews);
         }
-
-        return ResponseEntity.ok(response);
+        return response;
     }
 
 }
