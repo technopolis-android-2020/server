@@ -34,8 +34,8 @@ public class NewsRestControllerV1 {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("from/{dateInString}")
-    public ResponseEntity<List<Object>> getNewsFromDate(@PathVariable String dateInString){
+    @GetMapping("byDate/{dateInString}")
+    public ResponseEntity<List<Object>> getNewsFromDate(@PathVariable String dateInString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
         Date date = null;
@@ -49,7 +49,8 @@ public class NewsRestControllerV1 {
 
         List<News> news = newsService.getByDate(date);
 
-        List<Object> response = getResponse(news);;
+        List<Object> response = getResponse(news);
+        ;
 
         return ResponseEntity.ok(response);
     }

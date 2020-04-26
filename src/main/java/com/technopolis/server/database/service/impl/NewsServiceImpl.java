@@ -43,7 +43,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public List<News> getByDate(Date date){
+    public List<News> getByDate(Date date) {
         List<News> result = newsRepository.findNewsByPublicationDateAfter(date);
         log.info("IN getByDate<News> - {} News found", result.size());
         return result;
