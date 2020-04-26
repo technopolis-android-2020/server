@@ -1,11 +1,10 @@
 package com.technopolis.server.server.controllers;
 
-import com.technopolis.server.server.dto.AddCommentDto;
 import com.technopolis.server.database.model.Comment;
 import com.technopolis.server.database.service.CommentService;
+import com.technopolis.server.server.dto.AddCommentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -26,10 +25,6 @@ public class CommentRestControllerV1 {
     @PostMapping("add")
     public ResponseEntity<Map<Object, Object>> addComment(@RequestBody AddCommentDto requestDto) {
         Comment comment = commentService.add(requestDto);
-
-        if (comment == null) {
-            throw new UsernameNotFoundException("no comment has been added");
-        }
 
         Map<Object, Object> response = new HashMap<>();
         fillCommentResponse(comment, response);

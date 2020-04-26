@@ -3,8 +3,8 @@ package com.technopolis.server.server.controllers;
 import com.technopolis.server.database.model.News;
 import com.technopolis.server.database.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +27,7 @@ public class NewsRestControllerV1 {
 
     @GetMapping("getAll")
     public ResponseEntity<List<Object>> getAllNews() {
-        List<News> news = newsService.getAll();
-
-        List<Object> response = getResponse(news);
+        List<Object> response = getResponse(newsService.getAll());
 
         return ResponseEntity.ok(response);
     }
@@ -41,15 +39,11 @@ public class NewsRestControllerV1 {
         Date date = null;
         try {
             date = formatter.parse(dateInString);
-            System.out.println(date);
-            System.out.println(formatter.format(date));
         } catch (ParseException e) {
-            throw new UsernameNotFoundException("<dateInString> is not in format");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<News> news = newsService.getByDate(date);
-
-        List<Object> response = getResponse(news);
+        List<Object> response = getResponse(newsService.getByDate(date));
 
         return ResponseEntity.ok(response);
     }
