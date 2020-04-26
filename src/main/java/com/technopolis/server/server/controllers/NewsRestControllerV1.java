@@ -34,7 +34,7 @@ public class NewsRestControllerV1 {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("byDate/{dateInString}")
+    @GetMapping("fromDate/{dateInString}")
     public ResponseEntity<List<Object>> getNewsFromDate(@PathVariable String dateInString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
