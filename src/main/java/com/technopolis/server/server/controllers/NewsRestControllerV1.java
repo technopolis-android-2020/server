@@ -50,7 +50,6 @@ public class NewsRestControllerV1 {
         List<News> news = newsService.getByDate(date);
 
         List<Object> response = getResponse(news);
-        ;
 
         return ResponseEntity.ok(response);
     }
