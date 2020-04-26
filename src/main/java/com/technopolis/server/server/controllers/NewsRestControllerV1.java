@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,11 +25,11 @@ public class NewsRestControllerV1 {
     }
 
     @GetMapping("getAll")
-    public ResponseEntity<Map<Integer, Object>> getAllNews() {
+    public ResponseEntity<List<Object>> getAllNews() {
         List<News> news = newsService.getAll();
 
-        Map<Integer, Object> response = new HashMap<>();
-        int count = 0;
+        List<Object> response = new LinkedList<>();
+
         for (News element : news) {
             Map<Object, Object> oneNews = new HashMap<>();
             oneNews.put("id", element.getId());
@@ -40,7 +41,7 @@ public class NewsRestControllerV1 {
             // в будущем надо решить как отправлять комментарии.
             // с новостью или отдельно
 
-            response.put(count++, oneNews);
+            response.add(oneNews);
         }
 
         return ResponseEntity.ok(response);
