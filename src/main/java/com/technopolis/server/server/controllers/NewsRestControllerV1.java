@@ -54,10 +54,10 @@ public class NewsRestControllerV1 {
             Map<Object, Object> oneNews = new HashMap<>();
             oneNews.put("id", element.getId());
             oneNews.put("title", element.getTitle());
-            //oneNews.put("body", element.getBody());
+            oneNews.put("body", element.getBody());
             oneNews.put("url", element.getUrl());
             oneNews.put("date", element.getPublicationDate());
-            //oneNews.put("agent", element.getAgent().getName());
+            oneNews.put("agent", element.getAgent().getName());
             oneNews.put("logo", element.getPreviewImgUrl());
             // в будущем надо решить как отправлять комментарии.
             // с новостью или отдельно
