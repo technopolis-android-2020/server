@@ -57,7 +57,7 @@ public class NewsRestControllerV1 {
             //oneNews.put("body", element.getBody());
             oneNews.put("url", element.getUrl());
             oneNews.put("date", element.getPublicationDate());
-            oneNews.put("agent", element.getAgent().getName());
+            //oneNews.put("agent", element.getAgent().getName());
             oneNews.put("logo", element.getPreviewImgUrl());
             // в будущем надо решить как отправлять комментарии.
             // с новостью или отдельно
