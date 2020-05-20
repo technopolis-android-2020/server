@@ -29,7 +29,6 @@ public class User extends BaseEntity {
     @Column(name = "refresh_token")
     private String refreshToken;
 
-
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Comment> comment;
 

@@ -127,12 +127,10 @@ public abstract class Fetcher implements Callable<Integer> {
 
     private String getUrlFromRssEntity(@NotNull final SyndEntry entry) {
         String url;
-
         if ( (url = entry.getLink()) == null) {
             logger.warn(this.getClass().getName() + ": entity has null link");
             return null;
         }
-
         return url;
     }
 
@@ -155,12 +153,10 @@ public abstract class Fetcher implements Callable<Integer> {
 
     private Agent getAgent() {
         Agent agent;
-
         if ( (agent = agentService.getAgent(agentName)) == null) {
             logger.warn(this.getClass().getName() + ": agent is null");
             return null;
         }
-
         return agent;
     }
 }

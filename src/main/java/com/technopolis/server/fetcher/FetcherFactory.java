@@ -28,11 +28,9 @@ public class FetcherFactory {
 
     List<Fetcher> getFetchers() {
         List<Fetcher> result = new ArrayList<>();
-
         if (rssUrls.containsKey("RBC")) {
             result.add( new RbcFetcher(rssUrls.get("RBC"), agentService, newsService) );
         }
-
         return result;
     }
 

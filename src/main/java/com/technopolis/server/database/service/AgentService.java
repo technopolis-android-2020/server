@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface AgentService {
 
-    public Agent getAgent(@NotNull final String name);
+    Agent getAgent(@NotNull final String name);
 
-    public List<Agent> findAll();
+    List<Agent> findAll();
 
 }
