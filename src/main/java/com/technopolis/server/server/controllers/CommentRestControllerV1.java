@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,12 +19,12 @@ public class CommentRestControllerV1 {
     private final CommentService commentService;
 
     @Autowired
-    public CommentRestControllerV1(CommentService commentService) {
+    public CommentRestControllerV1(@NotNull final CommentService commentService) {
         this.commentService = commentService;
     }
 
     @PostMapping("add")
-    public ResponseEntity<Map<Object, Object>> addComment(@RequestBody AddCommentDto requestDto) {
+    public ResponseEntity<Map<Object, Object>> addComment(@RequestBody final AddCommentDto requestDto) {
         Comment comment = commentService.add(requestDto);
 
         Map<Object, Object> response = new HashMap<>();
@@ -33,7 +34,7 @@ public class CommentRestControllerV1 {
     }
 
     @GetMapping("byNewsId/{id}")
-    public ResponseEntity<Map<Integer, Object>> getCommentsByNews(@PathVariable Long id) {
+    public ResponseEntity<Map<Integer, Object>> getCommentsByNews(@PathVariable final Long id) {
         List<Comment> comments = commentService.findAllByNewsId(id);
 
         Map<Integer, Object> response = new HashMap<>();
@@ -48,7 +49,8 @@ public class CommentRestControllerV1 {
         return ResponseEntity.ok(response);
     }
 
-    private void fillCommentResponse(Comment com, Map<Object, Object> comment) {
+    private void fillCommentResponse(@NotNull final Comment com,
+                                     @NotNull final Map<Object, Object> comment) {
         comment.put("username", com.getUser().getUsername());
         comment.put("newId", com.getNews().getId());
         comment.put("content", com.getContent());

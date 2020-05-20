@@ -7,16 +7,20 @@ import org.jsoup.select.Elements;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import javax.validation.constraints.NotNull;
+
 
 public class RbcFetcher extends Fetcher {
 
-    RbcFetcher(String rssUrl, AgentServiceImpl agentService, NewsServiceImpl newsService) {
+    RbcFetcher(@NotNull final String rssUrl,
+               @NotNull final AgentServiceImpl agentService,
+               @NotNull final NewsServiceImpl newsService) {
         super(rssUrl, agentService, newsService);
         this.agentName = "RBC";
     }
 
     @Override
-    String getNewsBody(Document newsDocument) {
+    String getNewsBody(@NotNull final Document newsDocument) {
         Document newDocument = Document.createShell("");
 
         logger.info("RBC_Fetcher: start handling document.");
@@ -37,7 +41,7 @@ public class RbcFetcher extends Fetcher {
     }
 
     @Override
-    String getPreviewImageFromRssEntity(SyndEntry entity) {
+    String getPreviewImageFromRssEntity(@NotNull final SyndEntry entity) {
         return entity.getEnclosures().isEmpty() ? channelPreviewImgUrl : entity.getEnclosures().get(0).getUrl();
     }
 
@@ -47,7 +51,7 @@ public class RbcFetcher extends Fetcher {
     }
 
     @Override
-    String getNewsTitle(Document newsDocument) {
+    String getNewsTitle(@NotNull final Document newsDocument) {
         return newsDocument.body().getElementsByClass("article__header__title").first().text();
     }
 

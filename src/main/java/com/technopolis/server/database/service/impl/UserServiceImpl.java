@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +24,16 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(@NotNull final UserRepository userRepository,
+                           @NotNull final RoleRepository roleRepository,
+                           @NotNull final BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public User register(User user) {
+    public void register(@NotNull final User user) {
         Role roleUser = roleRepository.findByName("ROLE_USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
@@ -44,11 +47,10 @@ public class UserServiceImpl implements UserService {
 
         log.info("IN register - user: {} successfully registered", registeredUser);
 
-        return registeredUser;
     }
 
     @Override
-    public User updateUser(User user) {
+    public User updateUser(@NotNull final User user) {
         return userRepository.save(user);
     }
 
@@ -60,14 +62,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) {
+    public User findByUsername(@NotNull final String username) {
         User result = userRepository.findByUsername(username);
         log.info("IN findByUsername<User> - user: found by username: {}", username);
         return result;
     }
 
     @Override
-    public User findByEmail(String email) {
+    public User findByEmail(@NotNull final String email) {
         User result = userRepository.findByEmail(email);
         log.info("IN findByEmail<User> - user: {} found by email: {}", result, email);
         return result;
@@ -75,7 +77,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User findById(Long id) {
+    public User findById(final Long id) {
         User result = userRepository.findById(id).orElse(null);
 
         if (result == null) {
@@ -88,7 +90,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(final Long id) {
         userRepository.deleteById(id);
         log.info("IN delete<User> - user with id: {} successfully deleted", id);
     }

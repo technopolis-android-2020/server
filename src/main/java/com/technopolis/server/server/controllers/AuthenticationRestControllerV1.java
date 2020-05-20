@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,14 +33,16 @@ public class AuthenticationRestControllerV1 {
     private final UserService userService;
 
     @Autowired
-    public AuthenticationRestControllerV1(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {
+    public AuthenticationRestControllerV1(@NotNull final AuthenticationManager authenticationManager,
+                                          @NotNull final JwtTokenProvider jwtTokenProvider,
+                                          @NotNull final UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
         this.userService = userService;
     }
 
     @PostMapping("login")
-    public ResponseEntity<Map<Object, Object>> login(@RequestBody AuthenticationRequestDto requestDto) {
+    public ResponseEntity<Map<Object, Object>> login(@RequestBody final AuthenticationRequestDto requestDto) {
         try {
             String username = requestDto.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
@@ -67,7 +70,7 @@ public class AuthenticationRestControllerV1 {
     }
 
     @PostMapping("register")
-    public ResponseEntity<Map<Object, Object>> register(@RequestBody RegisterRequestDto requestDto) {
+    public ResponseEntity<Map<Object, Object>> register(@RequestBody final RegisterRequestDto requestDto) {
         String username = requestDto.getUsername();
         String email = requestDto.getEmail();
         if (userService.findByUsername(username) != null) {
@@ -95,7 +98,7 @@ public class AuthenticationRestControllerV1 {
     }
 
     @PostMapping("refresh")
-    public ResponseEntity<Map<Object, Object>> refresh(@RequestBody RefreshRequestDto requestDto) {
+    public ResponseEntity<Map<Object, Object>> refresh(@RequestBody final RefreshRequestDto requestDto) {
         String reqUsername = requestDto.getUsername();
         String reqRefreshToken = requestDto.getRefreshToken();
 

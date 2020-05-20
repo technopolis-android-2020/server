@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.technopolis.server.database.model.User;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 //Класс для тестирования работоспособности токена
 // в продкшене удалить
 @Data
@@ -26,7 +28,7 @@ public class UserDto {
         return user;
     }
 
-    public static UserDto fromUser(User user) {
+    public static UserDto fromUser(@NotNull final User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());

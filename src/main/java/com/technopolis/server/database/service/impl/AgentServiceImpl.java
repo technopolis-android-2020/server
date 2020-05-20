@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.technopolis.server.database.model.Agent;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Service
@@ -13,11 +14,11 @@ public class AgentServiceImpl {
     private final AgentRepository agentRepository;
 
     @Autowired
-    public AgentServiceImpl (AgentRepository agentRepository) {
+    public AgentServiceImpl(@NotNull final AgentRepository agentRepository) {
         this.agentRepository = agentRepository;
     }
 
-    public Agent getAgent(String name) {
+    public Agent getAgent(@NotNull final String name) {
         return this.agentRepository.findAgentByName(name);
     }
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -21,7 +22,7 @@ public class NewsRestControllerV1 {
     private final NewsService newsService;
 
     @Autowired
-    public NewsRestControllerV1(NewsService newsService) {
+    public NewsRestControllerV1(@NotNull final NewsService newsService) {
         this.newsService = newsService;
     }
 
@@ -33,7 +34,7 @@ public class NewsRestControllerV1 {
     }
 
     @GetMapping("fromDate/{dateInString}")
-    public ResponseEntity<List<Object>> getNewsFromDate(@PathVariable String dateInString) {
+    public ResponseEntity<List<Object>> getNewsFromDate(@PathVariable final String dateInString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
         Date date = null;
@@ -48,7 +49,7 @@ public class NewsRestControllerV1 {
         return ResponseEntity.ok(response);
     }
 
-    private List<Object> getResponse(List<News> news) {
+    private List<Object> getResponse(@NotNull final List<News> news) {
         List<Object> response = new LinkedList<>();
         for (News element : news) {
             Map<Object, Object> oneNews = new HashMap<>();
@@ -58,7 +59,7 @@ public class NewsRestControllerV1 {
             oneNews.put("url", element.getUrl());
             oneNews.put("date", element.getPublicationDate());
             oneNews.put("agent", element.getAgent().getName());
-            oneNews.put("logo", element.getPreviewImgUrl());
+            oneNews.put("logo", element.getImageUrl());
             // в будущем надо решить как отправлять комментарии.
             // с новостью или отдельно
 

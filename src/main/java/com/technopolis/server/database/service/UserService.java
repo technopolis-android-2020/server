@@ -2,20 +2,21 @@ package com.technopolis.server.database.service;
 
 import com.technopolis.server.database.model.User;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface UserService {
-    User register(User user);
+    void register(@NotNull final User user);
 
     List<User> getAll();
 
-    User findByUsername(String username);
+    User findByUsername(@NotNull final String username);
 
-    User findByEmail(String email);
+    User findByEmail(@NotNull final String email);
 
-    User findById(Long id);
+    User findById(final Long id);
 
-    void delete(Long id);
+    void delete(final Long id);
 
     User updateUser(User user);
 }

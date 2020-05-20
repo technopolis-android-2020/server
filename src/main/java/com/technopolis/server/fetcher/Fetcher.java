@@ -14,6 +14,7 @@ import com.technopolis.server.database.model.Agent;
 import com.technopolis.server.database.service.impl.NewsServiceImpl;
 import com.technopolis.server.database.service.impl.AgentServiceImpl;
 
+import javax.validation.constraints.NotNull;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -24,15 +25,17 @@ import java.util.concurrent.Callable;
 
 public abstract class Fetcher implements Callable<Integer> {
 
-    private AgentServiceImpl agentService;
-    private NewsServiceImpl newsService;
+    private final AgentServiceImpl agentService;
+    private final NewsServiceImpl newsService;
     String channelPreviewImgUrl;
-    private String rssUrl;
+    private final String rssUrl;
     SyndFeed fetchedRss;
     String agentName;
     Logger logger;
 
-    Fetcher(String rssUrl, AgentServiceImpl agentService, NewsServiceImpl newsService) {
+    Fetcher(@NotNull final String rssUrl,
+            @NotNull final AgentServiceImpl agentService,
+            @NotNull final NewsServiceImpl newsService) {
         this.rssUrl = rssUrl;
         this.newsService = newsService;
         this.agentService = agentService;
@@ -51,7 +54,7 @@ public abstract class Fetcher implements Callable<Integer> {
     // +            Document Methods               +
     // +-------------------------------------------+
 
-    private Document fetchDocument(String url) {
+    private Document fetchDocument(@NotNull final String url) {
         try {
             return Jsoup.connect(url).get();
         } catch (IOException e) {
@@ -60,7 +63,7 @@ public abstract class Fetcher implements Callable<Integer> {
         }
     }
 
-    private String getTitle(Document newsDocument) {
+    private String getTitle(@NotNull final Document newsDocument) {
         String title;
 
         if ( (title = getNewsTitle(newsDocument)) == null) {
@@ -71,9 +74,9 @@ public abstract class Fetcher implements Callable<Integer> {
         return title;
     }
 
-    abstract String getNewsTitle(Document newsDocument);
+    abstract String getNewsTitle(@NotNull final Document newsDocument);
 
-    abstract String getNewsBody(Document newsDocument);
+    abstract String getNewsBody(@NotNull final Document newsDocument);
 
 
     // +-------------------------------------------+
@@ -103,7 +106,7 @@ public abstract class Fetcher implements Callable<Integer> {
 
         News news = new News();
         news.setPublicationDate(getPublicationDateFromRssEntity(entry));
-        news.setPreviewImgUrl(getPreviewImageFromRssEntity(entry));
+        news.setImageUrl(getPreviewImageFromRssEntity(entry));
         news.setTitle(getTitle(document));
         news.setBody(getNewsBody(document));
         news.setAgent(getAgent());
@@ -117,12 +120,12 @@ public abstract class Fetcher implements Callable<Integer> {
     // +               Rss Methods                 +
     // +-------------------------------------------+
 
-    private void fetchRss(URL rssUrl) throws IOException, FeedException {
+    private void fetchRss(@NotNull final URL rssUrl) throws IOException, FeedException {
         logger.info(this.getClass().getName() + ": Fetching rss.");
         fetchedRss = new SyndFeedInput().build(new XmlReader(rssUrl));
     }
 
-    private String getUrlFromRssEntity(SyndEntry entry) {
+    private String getUrlFromRssEntity(@NotNull final SyndEntry entry) {
         String url;
 
         if ( (url = entry.getLink()) == null) {
@@ -133,19 +136,19 @@ public abstract class Fetcher implements Callable<Integer> {
         return url;
     }
 
-    private Date getPublicationDateFromRssEntity(SyndEntry entry) {
+    private Date getPublicationDateFromRssEntity(@NotNull final SyndEntry entry) {
         return entry.getPublishedDate() == null ?
                 Calendar.getInstance().getTime() :
                 entry.getPublishedDate();
     }
 
-    abstract String getPreviewImageFromRssEntity(SyndEntry entity);
+    abstract String getPreviewImageFromRssEntity(@NotNull final SyndEntry entity);
 
     abstract String getChannelPreviewImg();
 
     // ---------------------------------------------
 
-    private void saveNews(List<News> news) {
+    private void saveNews(@NotNull final List<News> news) {
         logger.info(this.getClass().getName() + ": saving news");
         newsService.addNews(news);
     }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Service
@@ -25,14 +26,16 @@ public class CommentServiceImpl implements CommentService {
     private final UserRepository userRepository;
 
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository, NewsRepository newsRepository, UserRepository userRepository) {
+    public CommentServiceImpl(@NotNull final CommentRepository commentRepository,
+                              @NotNull final NewsRepository newsRepository,
+                              @NotNull final UserRepository userRepository) {
         this.commentRepository = commentRepository;
         this.newsRepository = newsRepository;
         this.userRepository = userRepository;
     }
 
     @Override
-    public Comment add(AddCommentDto addComment) {
+    public Comment add(@NotNull final AddCommentDto addComment) {
         Comment comment = new Comment();
 
         Long newsId = addComment.getNewsId();
@@ -63,7 +66,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment findById(Long id) {
+    public Comment findById(final Long id) {
         Comment result = commentRepository.findById(id).orElse(null);
 
         if (result == null) {
@@ -76,7 +79,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> findAllByNewsId(Long id) {
+    public List<Comment> findAllByNewsId(final Long id) {
         News news = newsRepository.findById(id).orElse(null);
         if (news == null) {
             log.warn("IN findAllByNewsId<Comment> - no news found by id: {}", id);
@@ -94,12 +97,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(final Long id) {
 
     }
 
     @Override
-    public Comment updateComment(Comment comment) {
+    public Comment updateComment(@NotNull final Comment comment) {
         return null;
     }
 }

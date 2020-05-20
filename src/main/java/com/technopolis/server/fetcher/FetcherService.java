@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
+import javax.validation.constraints.NotNull;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @Component
 public class FetcherService implements CommandLineRunner {
 
-    private FetcherFactory fetcherFactory;
+    private final FetcherFactory fetcherFactory;
     private ExecutorService executor;
     private List<Fetcher> fetchers;
     @Value("${fetcherServiceNumberOfThreads}")
@@ -24,7 +25,7 @@ public class FetcherService implements CommandLineRunner {
     private int timeout;
 
     @Autowired
-    FetcherService(FetcherFactory fetcherFactory) {
+    FetcherService(@NotNull final FetcherFactory fetcherFactory) {
         this.fetcherFactory = fetcherFactory;
     }
 

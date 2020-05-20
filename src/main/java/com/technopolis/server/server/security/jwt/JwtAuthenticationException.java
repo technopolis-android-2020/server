@@ -2,12 +2,15 @@ package com.technopolis.server.server.security.jwt;
 
 import org.springframework.security.core.AuthenticationException;
 
+import javax.validation.constraints.NotNull;
+
 public class JwtAuthenticationException extends AuthenticationException {
-    public JwtAuthenticationException(String msg, Throwable t) {
+    public JwtAuthenticationException(@NotNull final String msg,
+                                      @NotNull final Throwable t) {
         super(msg, t);
     }
 
-    public JwtAuthenticationException(String msg) {
+    public JwtAuthenticationException(@NotNull final String msg) {
         super(msg);
     }
 }

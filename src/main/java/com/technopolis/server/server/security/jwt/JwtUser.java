@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Date;
 
@@ -19,16 +20,15 @@ public class JwtUser implements UserDetails {
     private final Date lastPasswordResetDate;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public JwtUser(
-            Long id,
-            String username,
-            String firstName,
-            String lastName,
-            String email,
-            String password, Collection<? extends GrantedAuthority> authorities,
-            boolean enabled,
-            Date lastPasswordResetDate
-    ) {
+    public JwtUser(final Long id,
+                   @NotNull final String username,
+                   @NotNull final String firstName,
+                   @NotNull final String lastName,
+                   @NotNull final String email,
+                   @NotNull final String password,
+                   final Collection<? extends GrantedAuthority> authorities,
+                   final boolean enabled,
+                   final Date lastPasswordResetDate) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;

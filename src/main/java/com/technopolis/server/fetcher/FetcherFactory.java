@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,11 +16,12 @@ public class FetcherFactory {
 
     @Value("#{${rssUrl}}")
     private Map<String, String> rssUrls;
-    private NewsServiceImpl newsService;
-    private AgentServiceImpl agentService;
+    private final NewsServiceImpl newsService;
+    private final AgentServiceImpl agentService;
 
     @Autowired
-    FetcherFactory(AgentServiceImpl agentService, NewsServiceImpl newsService) {
+    FetcherFactory(@NotNull final AgentServiceImpl agentService,
+                   @NotNull final NewsServiceImpl newsService) {
         this.agentService = agentService;
         this.newsService = newsService;
     }
