@@ -1,6 +1,7 @@
 package com.technopolis.server.database.service.impl;
 
 import com.technopolis.server.database.repository.AgentRepository;
+import com.technopolis.server.database.service.AgentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.technopolis.server.database.model.Agent;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Service
-public class AgentServiceImpl {
+public class AgentServiceImpl implements AgentService {
 
     private final AgentRepository agentRepository;
 
