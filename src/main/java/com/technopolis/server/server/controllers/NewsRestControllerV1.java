@@ -1,6 +1,8 @@
 package com.technopolis.server.server.controllers;
 
+import com.technopolis.server.database.model.Agent;
 import com.technopolis.server.database.model.News;
+import com.technopolis.server.database.service.AgentService;
 import com.technopolis.server.database.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,15 +22,18 @@ import java.util.*;
 public class NewsRestControllerV1 {
 
     private final NewsService newsService;
+    private final AgentService agentService;
 
     @Autowired
-    public NewsRestControllerV1(@NotNull final NewsService newsService) {
+    public NewsRestControllerV1(@NotNull final NewsService newsService,
+                                @NotNull final AgentService agentService) {
         this.newsService = newsService;
+        this.agentService = agentService;
     }
 
-    @GetMapping("getAll")
+    @GetMapping("getAllNews")
     public ResponseEntity<List<Object>> getAllNews() {
-        List<Object> response = getResponse(newsService.getAll());
+        List<Object> response = getNewsResponse(newsService.getAllNews());
 
         return ResponseEntity.ok(response);
     }
@@ -44,12 +49,12 @@ public class NewsRestControllerV1 {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<Object> response = getResponse(newsService.getByDate(date));
+        List<Object> response = getNewsResponse(newsService.getByDate(date));
 
         return ResponseEntity.ok(response);
     }
 
-    private List<Object> getResponse(@NotNull final List<News> news) {
+    private List<Object> getNewsResponse(@NotNull final List<News> news) {
         List<Object> response = new LinkedList<>();
         for (News element : news) {
             Map<Object, Object> oneNews = new HashMap<>();
@@ -60,10 +65,26 @@ public class NewsRestControllerV1 {
             oneNews.put("date", element.getPublicationDate());
             oneNews.put("agent", element.getAgent().getName());
             oneNews.put("logo", element.getImageUrl());
-            // в будущем надо решить как отправлять комментарии.
-            // с новостью или отдельно
-
             response.add(oneNews);
+        }
+        return response;
+    }
+
+    @GetMapping("getAllAgents")
+    public ResponseEntity<List<Object>> getAllAgents() {
+        List<Object> response = getAgentResponse(agentService.findAll());
+
+        return ResponseEntity.ok(response);
+    }
+
+    private List<Object> getAgentResponse(@NotNull final List<Agent> agents) {
+        List<Object> response = new LinkedList<>();
+        for (Agent agent : agents) {
+            Map<Object, Object> oneAgent = new HashMap<>();
+            oneAgent.put("id", agent.getId());
+            oneAgent.put("title", agent.getName());
+            oneAgent.put("previewImageUrl", agent.getPreviewImageUrl());
+            response.add(oneAgent);
         }
         return response;
     }

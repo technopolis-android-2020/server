@@ -10,7 +10,7 @@ import java.util.List;
 public interface NewsService {
     News findById(final Long id);
 
-    List<News> getAll();
+    List<News> getAllNews();
 
     List<News> getByDate(@NotNull final Date date);
 }

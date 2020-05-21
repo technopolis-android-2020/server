@@ -1,6 +1,8 @@
 package com.technopolis.server.database.service.impl;
 
+import com.technopolis.server.database.model.Agent;
 import com.technopolis.server.database.model.News;
+import com.technopolis.server.database.repository.AgentRepository;
 import com.technopolis.server.database.repository.NewsRepository;
 import com.technopolis.server.database.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +39,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public List<News> getAll() {
+    public List<News> getAllNews() {
         List<News> result = newsRepository.findAll(Sort.by("publicationDate"));
         log.info("IN getAll<News> - {} News found", result.size());
         return result;
