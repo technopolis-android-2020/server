@@ -12,5 +12,5 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 
     News findTopByAgent_NameOrderByPublicationDateDesc(@NotNull final String agentName);
 
-    List<News> findNewsByPublicationDateAfter(@NotNull final Date publicationDate);
+    List<News> findNewsByPublicationDateAfter(@NotNull final Long publicationDate);
 }

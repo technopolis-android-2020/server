@@ -12,5 +12,5 @@ public interface NewsService {
 
     List<News> getAllNews();
 
-    List<News> getByDate(@NotNull final Date date);
+    List<News> getByDate(@NotNull final Long date);
 }
