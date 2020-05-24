@@ -23,6 +23,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
+import static com.technopolis.server.hekpers.Converters.dateToTimestamp;
+import static com.technopolis.server.hekpers.Converters.fromTimestamp;
+
 public abstract class Fetcher implements Callable<Integer> {
 
     private final AgentServiceImpl agentService;
@@ -85,12 +88,12 @@ public abstract class Fetcher implements Callable<Integer> {
 
     private List<News> makeNews() {
         List<News> result = new ArrayList<>();
-        Date latestDate = newsService.getLatestDateByAgentName(agentName);
+        Long latestDate = newsService.getLatestDateByAgentName(agentName);
 
         logger.info(this.getClass().getName() + ": making news from feed.");
 
         for (SyndEntry entry: fetchedRss.getEntries()) {
-            if (latestDate == null || getPublicationDateFromRssEntity(entry).compareTo(latestDate) > 0) {
+            if (latestDate == null || getPublicationDateFromRssEntity(entry).compareTo(fromTimestamp(latestDate)) > 0) {
                 result.add(makeNews(entry));
             }
         }
@@ -105,7 +108,7 @@ public abstract class Fetcher implements Callable<Integer> {
         logger.info("RBC_Fetcher: Making news with rss " + url);
 
         News news = new News();
-        news.setPublicationDate(getPublicationDateFromRssEntity(entry));
+        news.setPublicationDate(dateToTimestamp(getPublicationDateFromRssEntity(entry)));
         news.setImageUrl(getPreviewImageFromRssEntity(entry));
         news.setTitle(getTitle(document));
         news.setBody(getNewsBody(document));

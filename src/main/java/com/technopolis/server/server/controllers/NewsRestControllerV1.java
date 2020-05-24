@@ -17,6 +17,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static com.technopolis.server.hekpers.Converters.dateToTimestamp;
+
 @RestController
 @RequestMapping(value = "/api/v1/news/")
 public class NewsRestControllerV1 {
@@ -38,9 +40,9 @@ public class NewsRestControllerV1 {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("fromDate/{dateInString}")
-    public ResponseEntity<List<Object>> getNewsFromDate(@PathVariable final String dateInString) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+    @GetMapping("fromDate/{dateLong}")
+    public ResponseEntity<List<Object>> getNewsFromDate(@PathVariable final Long dateLong) {
+        /*SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
         Date date;
         try {
@@ -48,8 +50,8 @@ public class NewsRestControllerV1 {
         } catch (ParseException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-        List<Object> response = getNewsResponse(newsService.getByDate(date));
+*/
+        List<Object> response = getNewsResponse(newsService.getByDate(dateLong));
 
         return ResponseEntity.ok(response);
     }

@@ -46,7 +46,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public List<News> getByDate(@NotNull final Date date) {
+    public List<News> getByDate(@NotNull final Long date) {
         List<News> result = newsRepository.findNewsByPublicationDateAfter(date);
         log.info("IN getByDate<News> - {} News found", result.size());
         return result;
@@ -60,7 +60,7 @@ public class NewsServiceImpl implements NewsService {
         this.newsRepository.saveAll(news);
     }
 
-    public Date getLatestDateByAgentName(@NotNull final String agentName) {
+    public Long getLatestDateByAgentName(@NotNull final String agentName) {
         News news = this.newsRepository.findTopByAgent_NameOrderByPublicationDateDesc(agentName);
         return news == null ? null : news.getPublicationDate();
     }

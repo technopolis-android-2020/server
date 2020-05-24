@@ -26,7 +26,7 @@ public class News extends BaseEntity {
     private String url;
 
     @Column(name = "date", nullable = false)
-    private Date publicationDate;
+    private Long publicationDate;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "agent_id")
