@@ -102,7 +102,7 @@ public abstract class Fetcher implements Callable<Integer> {
         String url = getUrlFromRssEntity(entry);
         Document document = fetchDocument(url);
 
-        logger.info("RBC_Fetcher: Making news with rss " + url);
+        logger.info(this.getClass().getName() + ": Making news with rss " + url);
 
         News news = new News();
         news.setPublicationDate(getPublicationDateFromRssEntity(entry));
@@ -149,6 +149,7 @@ public abstract class Fetcher implements Callable<Integer> {
     private void saveNews(@NotNull final List<News> news) {
         logger.info(this.getClass().getName() + ": saving news");
         newsService.addNews(news);
+        logger.info(this.getClass().getName() + ": news saved");
     }
 
     private Agent getAgent() {

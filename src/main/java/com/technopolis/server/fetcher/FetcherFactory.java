@@ -31,6 +31,9 @@ public class FetcherFactory {
         if (rssUrls.containsKey("RBC")) {
             result.add( new RbcFetcher(rssUrls.get("RBC"), agentService, newsService) );
         }
+        if (rssUrls.containsKey("Nplus1")){
+            result.add( new Nplus1Fetcher(rssUrls.get("Nplus1"), agentService, newsService) );
+        }
         return result;
     }
 
