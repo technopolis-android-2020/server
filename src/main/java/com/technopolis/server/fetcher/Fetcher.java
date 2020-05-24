@@ -63,10 +63,10 @@ public abstract class Fetcher implements Callable<Integer> {
         }
     }
 
-    private String getTitle(@NotNull final Document newsDocument) {
+    private String getTitle(@NotNull final SyndEntry entry) {
         String title;
 
-        if ( (title = getNewsTitle(newsDocument)) == null) {
+        if ( (title = getNewsTitle(entry)) == null) {
             logger.info(this.getClass().getName() + ": document has null title.");
             return null;
         }
@@ -74,7 +74,7 @@ public abstract class Fetcher implements Callable<Integer> {
         return title;
     }
 
-    abstract String getNewsTitle(@NotNull final Document newsDocument);
+    abstract String getNewsTitle(@NotNull final SyndEntry entry);
 
     abstract String getNewsBody(@NotNull final Document newsDocument);
 
@@ -107,7 +107,7 @@ public abstract class Fetcher implements Callable<Integer> {
         News news = new News();
         news.setPublicationDate(getPublicationDateFromRssEntity(entry));
         news.setImageUrl(getPreviewImageFromRssEntity(entry));
-        news.setTitle(getTitle(document));
+        news.setTitle(getTitle(entry));
         news.setBody(getNewsBody(document));
         news.setAgent(getAgent());
         news.setUrl(getUrlFromRssEntity(entry));
