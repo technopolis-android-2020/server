@@ -3,8 +3,6 @@ package com.technopolis.server.fetcher;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.technopolis.server.database.service.impl.AgentServiceImpl;
 import com.technopolis.server.database.service.impl.NewsServiceImpl;
-import org.jsoup.nodes.Attribute;
-import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
