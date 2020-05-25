@@ -19,8 +19,9 @@ public class VedomostiFetcher extends Fetcher {
     }
 
     @Override
-    String getNewsTitle(@NotNull Document newsDocument) {
-        return newsDocument.body().getElementsByClass("article-headline__title").first().text();
+    String getNewsTitle(@NotNull SyndEntry entry) {
+        String newsTitle = entry.getTitle();
+        return newsTitle == null ? "" : newsTitle;
     }
 
     @Override
