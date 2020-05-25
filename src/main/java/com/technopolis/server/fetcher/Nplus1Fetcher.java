@@ -19,22 +19,9 @@ public class Nplus1Fetcher extends Fetcher {
     }
 
     @Override
-    String getNewsTitle(@NotNull final Document newsDocument) {
-        String newsTitle = "";
-        Element mainElem = newsDocument.body().getElementsByClass("container _middle").first();
-        if (mainElem.hasClass("hero hero-promo")){
-            Element elem = mainElem.getElementsByTag("heading").first();
-            newsTitle = elem.getElementsByClass("heading-additional").text() + ". "
-                    + elem.getElementsByClass("subtitle").text();
-        } else {
-            Elements elems = mainElem.getElementsByTag("header");
-            for (Element elem : elems) {
-                if (elem.hasAttr("class") && "hero hero-lite".equals(elem.attr("class"))){
-                    newsTitle = elem.getElementsByTag("div").text();
-                }
-            }
-        }
-        return newsTitle;
+    String getNewsTitle(@NotNull final SyndEntry entry) {
+        String newsTitle = entry.getTitle();
+        return newsTitle == null ? "" : newsTitle;
     }
 
     @Override
@@ -59,7 +46,10 @@ public class Nplus1Fetcher extends Fetcher {
 
     @Override
     String getPreviewImageFromRssEntity(@NotNull final SyndEntry entity) {
-        return entity.getEnclosures().isEmpty() ? channelPreviewImgUrl : entity.getEnclosures().get(0).getUrl();
+        if (!entity.getForeignMarkup().isEmpty() && !entity.getForeignMarkup().get(0).getAttributes().isEmpty()) {
+            return entity.getForeignMarkup().get(0).getAttributes().get(0).getValue();
+        }
+        return channelPreviewImgUrl;
     }
 
     @Override

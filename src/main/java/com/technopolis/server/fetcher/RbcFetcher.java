@@ -51,8 +51,9 @@ public class RbcFetcher extends Fetcher {
     }
 
     @Override
-    String getNewsTitle(@NotNull final Document newsDocument) {
-        return newsDocument.body().getElementsByClass("article__header__title").first().text();
+    String getNewsTitle(@NotNull final SyndEntry entry) {
+        String newsTitle = entry.getTitle();
+        return newsTitle == null ? "" : newsTitle;
     }
 
 }
