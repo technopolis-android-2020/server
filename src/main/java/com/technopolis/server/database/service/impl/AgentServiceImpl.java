@@ -26,4 +26,9 @@ public class AgentServiceImpl implements AgentService {
     public List<Agent> findAll() {
         return agentRepository.findAll();
     }
+
+    public void addAgent(@NotNull final Agent agents) {
+        this.agentRepository.saveAndFlush(agents);
+    }
+
 }

@@ -35,6 +35,7 @@ public abstract class Fetcher implements Callable<Integer> {
     SyndFeed fetchedRss;
     String agentName;
     Logger logger;
+    Agent agent;
 
     Fetcher(@NotNull final String rssUrl,
             @NotNull final AgentServiceImpl agentService,
@@ -49,6 +50,9 @@ public abstract class Fetcher implements Callable<Integer> {
     public Integer call() throws Exception {
         fetchRss( new URL(rssUrl));
         channelPreviewImgUrl = getChannelPreviewImg();
+        agent = getAgent();
+        setAgentPreviewImageUrl();
+        saveAgent();
         saveNews( makeNews());
         return 0;
     }
@@ -112,7 +116,7 @@ public abstract class Fetcher implements Callable<Integer> {
         news.setImageUrl(getPreviewImageFromRssEntity(entry));
         news.setTitle(getTitle(entry));
         news.setBody(getNewsBody(document));
-        news.setAgent(getAgent());
+        news.setAgent(agent);
         news.setUrl(getUrlFromRssEntity(entry));
 
         return news;
@@ -155,12 +159,24 @@ public abstract class Fetcher implements Callable<Integer> {
         logger.info(this.getClass().getName() + ": news saved");
     }
 
+    // +-------------------------------------------+
+    // +              Agent Methods                +
+    // +-------------------------------------------+
+
     private Agent getAgent() {
         Agent agent;
         if ( (agent = agentService.getAgent(agentName)) == null) {
             logger.warn(this.getClass().getName() + ": agent is null");
-            return null;
+            return new Agent(agentName);
         }
         return agent;
+    }
+
+    void setAgentPreviewImageUrl() {
+        agent.setPreviewImageUrl(channelPreviewImgUrl);
+    }
+
+    void saveAgent() {
+        agentService.addAgent(agent);
     }
 }
