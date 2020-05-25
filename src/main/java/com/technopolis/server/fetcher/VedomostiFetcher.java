@@ -9,35 +9,34 @@ import org.jsoup.select.Elements;
 
 import javax.validation.constraints.NotNull;
 
-public class Nplus1Fetcher extends Fetcher {
+public class VedomostiFetcher extends Fetcher {
 
-    public Nplus1Fetcher(@NotNull final String rssUrl,
-                         @NotNull final AgentServiceImpl agentService,
-                         @NotNull final NewsServiceImpl newsService) {
+    VedomostiFetcher(@NotNull final String rssUrl,
+               @NotNull final AgentServiceImpl agentService,
+               @NotNull final NewsServiceImpl newsService) {
         super(rssUrl, agentService, newsService);
-        this.agentName = "Nplus1";
+        this.agentName = "Vedomosti";
     }
 
     @Override
-    String getNewsTitle(@NotNull final SyndEntry entry) {
+    String getNewsTitle(@NotNull SyndEntry entry) {
         String newsTitle = entry.getTitle();
         return newsTitle == null ? "" : newsTitle;
     }
 
     @Override
-    String getNewsBody(@NotNull final Document newsDocument) {
+    String getNewsBody(@NotNull Document newsDocument) {
         Document newDocument = Document.createShell("");
 
-        logger.info("Nplus1_Fetcher: start handling document.");
+        logger.info("Vedomosti_Fetcher: start handling document.");
         Elements newsParts = newsDocument.body()
-                .getElementsByClass("col col-3").get(0)
-                .getElementsByClass("body js-mediator-article");
+                .getElementsByClass("article__content").first()
+                .getElementsByClass("article-boxes-list article__boxes");
 
         for (Element part : newsParts) {
-            logger.info("Nplus1_Fetcher: start handling element");
-            part.removeClass("article-image");
-            part.removeClass("incut incut-gallery");
-            part.removeClass("incut incut-quote");
+            logger.info("Vedomosti_Fetcher: start handling element");
+            part.removeClass("box-inset-media");
+            part.removeClass("box-inset-link__card");
             newDocument.body().appendChild(part);
         }
 
@@ -46,14 +45,12 @@ public class Nplus1Fetcher extends Fetcher {
 
     @Override
     String getPreviewImageFromRssEntity(@NotNull final SyndEntry entity) {
-        if (!entity.getForeignMarkup().isEmpty() && !entity.getForeignMarkup().get(0).getAttributes().isEmpty()) {
-            return entity.getForeignMarkup().get(0).getAttributes().get(0).getValue();
-        }
-        return channelPreviewImgUrl;
+        return entity.getEnclosures().isEmpty() ? channelPreviewImgUrl : entity.getEnclosures().get(0).getUrl();
     }
 
     @Override
     String getChannelPreviewImg() {
         return fetchedRss.getImage() == null ? "" : fetchedRss.getImage().getUrl();
     }
+
 }
