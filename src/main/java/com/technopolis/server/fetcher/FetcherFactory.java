@@ -42,22 +42,13 @@ public class FetcherFactory {
                 case "NakedScience":
                     result.add( new NakedScienceFetcher(rssUrls.get("NakedScience"), agentService, newsService));
                     break;
+                case "Habr":
+                    result.add( new HabrFetcher(rssUrls.get("Habr"), agentService, newsService));
+                    break;
                 default:
                     break;
             }
         }
-        /*if (rssUrls.containsKey("RBC")) {
-
-        }
-        if (rssUrls.containsKey("Nplus1")){
-
-        }
-        if (rssUrls.containsKey("Vedomosti")){
-
-        }
-        if (rssUrls.containsKey("Naked-Science")){
-
-        }*/
         return result;
     }
 
