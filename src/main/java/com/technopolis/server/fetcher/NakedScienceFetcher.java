@@ -9,13 +9,13 @@ import org.jsoup.select.Elements;
 
 import javax.validation.constraints.NotNull;
 
-public class VedomostiFetcher extends Fetcher {
+public class NakedScienceFetcher extends Fetcher {
 
-    VedomostiFetcher(@NotNull final String rssUrl,
-               @NotNull final AgentServiceImpl agentService,
-               @NotNull final NewsServiceImpl newsService) {
+    public NakedScienceFetcher(@NotNull String rssUrl,
+                               @NotNull AgentServiceImpl agentService,
+                               @NotNull NewsServiceImpl newsService) {
         super(rssUrl, agentService, newsService);
-        this.agentName = "Vedomosti";
+        this.agentName = "NakedScience";
     }
 
     @Override
@@ -28,15 +28,15 @@ public class VedomostiFetcher extends Fetcher {
     String getNewsBody(@NotNull final Document newsDocument) {
         Document newDocument = Document.createShell("");
 
-        logger.info("Vedomosti_Fetcher: start handling document.");
+        logger.info("NakedScience_Fetcher: start handling document.");
         Elements newsParts = newsDocument.body()
-                .getElementsByClass("article__content").first()
-                .getElementsByClass("article-boxes-list article__boxes");
+                .getElementsByClass("content").first()
+                .getElementsByClass("body");
 
         for (Element part : newsParts) {
-            logger.info("Vedomosti_Fetcher: start handling element");
-            part.removeClass("box-inset-media");
-            part.removeClass("box-inset-link__card");
+            logger.info("NakedScience_Fetcher: start handling element");
+            part.removeClass("ads_single");
+            part.removeClass("sidebar-block-item-left shesht-info-block__left");
             newDocument.body().appendChild(part);
         }
 
@@ -45,7 +45,10 @@ public class VedomostiFetcher extends Fetcher {
 
     @Override
     String getPreviewImageFromRssEntity(@NotNull final SyndEntry entity) {
-        return entity.getEnclosures().isEmpty() ? channelPreviewImgUrl : entity.getEnclosures().get(0).getUrl();
+        if (!entity.getForeignMarkup().isEmpty() && !entity.getForeignMarkup().get(0).getAttributes().isEmpty()) {
+            return entity.getForeignMarkup().get(0).getAttributes().get(0).getValue();
+        }
+        return channelPreviewImgUrl;
     }
 
     @Override

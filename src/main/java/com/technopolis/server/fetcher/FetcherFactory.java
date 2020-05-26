@@ -28,15 +28,36 @@ public class FetcherFactory {
 
     List<Fetcher> getFetchers() {
         List<Fetcher> result = new ArrayList<>();
-        if (rssUrls.containsKey("RBC")) {
-            result.add( new RbcFetcher(rssUrls.get("RBC"), agentService, newsService) );
+        for (Map.Entry<String, String> entry : rssUrls.entrySet()) {
+            switch (entry.getKey()){
+                case "RBC":
+                    result.add( new RbcFetcher(rssUrls.get("RBC"), agentService, newsService));
+                    break;
+                case "Nplus1":
+                    result.add( new Nplus1Fetcher(rssUrls.get("Nplus1"), agentService, newsService));
+                    break;
+                case "Vedomosti":
+                    result.add( new VedomostiFetcher(rssUrls.get("Vedomosti"), agentService, newsService));
+                    break;
+                case "NakedScience":
+                    result.add( new NakedScienceFetcher(rssUrls.get("NakedScience"), agentService, newsService));
+                    break;
+                default:
+                    break;
+            }
+        }
+        /*if (rssUrls.containsKey("RBC")) {
+
         }
         if (rssUrls.containsKey("Nplus1")){
-            result.add( new Nplus1Fetcher(rssUrls.get("Nplus1"), agentService, newsService) );
+
         }
         if (rssUrls.containsKey("Vedomosti")){
-            result.add( new VedomostiFetcher(rssUrls.get("Vedomosti"), agentService, newsService) );
+
         }
+        if (rssUrls.containsKey("Naked-Science")){
+
+        }*/
         return result;
     }
 
