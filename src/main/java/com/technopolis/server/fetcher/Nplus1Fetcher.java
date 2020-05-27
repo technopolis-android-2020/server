@@ -46,8 +46,11 @@ public class Nplus1Fetcher extends Fetcher {
 
     @Override
     String getPreviewImageFromRssEntity(@NotNull final SyndEntry entity) {
-        if (!entity.getForeignMarkup().isEmpty() && !entity.getForeignMarkup().get(0).getAttributes().isEmpty()) {
-            return entity.getForeignMarkup().get(0).getAttributes().get(0).getValue();
+        if (!entity.getForeignMarkup().isEmpty() &&
+                !entity.getForeignMarkup().get(0).getAttributes().isEmpty() &&
+                !entity.getForeignMarkup().get(0).getAttributes().get(0).getValue().equals("") ) {
+            String previewImage = entity.getForeignMarkup().get(0).getAttributes().get(0).getValue();
+            return previewImage.equals("") ? channelPreviewImgUrl : previewImage;
         }
         return channelPreviewImgUrl;
     }
