@@ -14,6 +14,10 @@ import javax.validation.constraints.NotNull;
 @Data
 public class Agent extends BaseEntity {
 
+    public Agent() {
+
+    }
+
     public Agent(@NotNull final String name) {
         this.name = name;
     }
